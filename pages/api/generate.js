@@ -36,13 +36,17 @@ export default async function (req, res) {
   }
 
   try {
-    const completion = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt: generatePrompt(animal, day),
+    const completion = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
       temperature: 0.5,
-      max_tokens: 1000,
+      max_tokens: 3500,
+      messages: [{
+        role: "user",
+        content: generatePrompt(animal, day),
+      }],
     });
-    res.status(200).json({ result: completion.data.choices[0].text });
+   
+    res.status(200).json({ result: completion.data.choices[0].message.content });
   } catch(error) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {
@@ -63,101 +67,112 @@ function generatePrompt(animal, day) {
   const capitalizedAnimal =
     animal[0].toUpperCase() + animal.slice(1).toLowerCase();
     const cdays = day;
-  return `I would like to travel to ${capitalizedAnimal}, please suggest an itinerary for ${cdays} days in ${capitalizedAnimal} with different attractions and activities to do and different restaurants and signature dishes to eat in the following JSON format:
-    [
-      {
-        "Day": {
-          "attraction": "",
-          "morning": {
-            "restaurant": "",
-            "breakfast": "",
-            "activity": ""
-          },
-          "afternoon": {
-            "restaurant": "",
-            "lunch": "",
-            "activity": ""
-          },
-          "evening": {
-            "restaurant": "",
-            "dinner": "",
-            "activity": ""
-          }
-        }
+  return `Please suggest a tour itinerary for ${cdays} days in ${capitalizedAnimal}, by suggesting different attractions to go, things to do, and food to eat for lunch and dinner with recommended restaurants, in the following JSON format:
+  [
+    {
+      "Day": {
+        "attraction": "",
+        "morning activity": "",
+        "lunch": "",
+        "afternoon activity": "",
+        "dinner": "",
+        "evening activity": ""
       }
-    ]`;
+    }
+  ]`;
 }
 
 /*
-`I would like to travel to ${capitalizedAnimal}, please suggest an itinerary for ${cdays} days in ${capitalizedAnimal} with different attractions and activities to do and different restaurants and signature dishes to eat in the following JSON format:
-  [
-      {
-        "Day": {
-          "attraction": "",
-          "morning": {
-            "restaurant": "",
-            "breakfast": "",
-            "activity": ""
-          },
-          "afternoon": {
-            "restaurant": "",
-            "lunch": "",
-            "activity": ""
-          },
-          "evening": {
-            "restaurant": "",
-            "dinner": "",
-            "activity": ""
-          }
+
+[
+    {
+      "Day": {
+        "attraction": "",
+        "morning": {
+          "activity": ""
+        },
+        "afternoon": {
+          "lunch": "",
+          "activity": ""
+        },
+        "evening": {
+          "dinner": "",
+          "activity": ""
         }
       }
-    ]`
+    }
+  ]
+
+`I would like to travel to ${capitalizedAnimal}, please suggest an itinerary for ${cdays} days in ${capitalizedAnimal} with different attractions and activities to do and different restaurants and signature dishes to eat in the following JSON format:
+  [
+    {
+      "Day x": {
+        "attraction": "",
+        "morning": {
+          "restaurant": "",
+          "breakfast": "",
+          "activity": ""
+        },
+        "afternoon": {
+          "restaurant": "",
+          "lunch": "",
+          "activity": ""
+        },
+        "evening": {
+          "restaurant": "",
+          "dinner": "",
+          "activity": ""
+        }
+      }
+    }
+  ]`
 
   `I would like to "balik kampung" to ${capitalizedAnimal}, please suggest an itinerary for ${cdays} days in ${capitalizedAnimal} with different attractions and activities to do and different restaurants and signature dishes to eat in the following JSON format:
   [
-      {
-        "Day": {
-          "attraction": "",
-          "morning": {
-            "restaurant": "",
-            "breakfast": "",
-            "activity": ""
-          },
-          "afternoon": {
-            "restaurant": "",
-            "lunch": "",
-            "activity": ""
-          },
-          "evening": {
-            "restaurant": "",
-            "dinner": "",
-            "activity": ""
-          }
+    {
+      "Day x": {
+        "attraction": "",
+        "morning": {
+          "restaurant": "",
+          "breakfast": "",
+          "activity": ""
+        },
+        "afternoon": {
+          "restaurant": "",
+          "lunch": "",
+          "activity": ""
+        },
+        "evening": {
+          "restaurant": "",
+          "dinner": "",
+          "activity": ""
         }
       }
-    ]`
+    }
+  ]`
 
   `I would like to travel to ${capitalizedAnimal} for Umrah, please suggest an itinerary for ${cdays} days in ${capitalizedAnimal} with different attractions and activities to do and different restaurants and signature dishes to eat in the following JSON format:
   [
-      {
-        "Day": {
-          "attraction": "",
-          "morning": {
-            "restaurant": "",
-            "breakfast": "",
-            "activity": ""
-          },
-          "afternoon": {
-            "restaurant": "",
-            "lunch": "",
-            "activity": ""
-          },
-          "evening": {
-            "restaurant": "",
-            "dinner": "",
-            "activity": ""
-          }
+    {
+      "Day x": {
+        "attraction": "",
+        "morning": {
+          "restaurant": "",
+          "breakfast": "",
+          "activity": ""
+        },
+        "afternoon": {
+          "restaurant": "",
+          "lunch": "",
+          "activity": ""
+        },
+        "evening": {
+          "restaurant": "",
+          "dinner": "",
+          "activity": ""
         }
       }
-    ]`
+    }
+  ]`
+
 */
