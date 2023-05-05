@@ -84,6 +84,8 @@ export default function Home() {
         <input style={{size: 300}} id="myInput" onChange={(g) => setResult(g.target.value)} value={result}></input>
         <br></br>
         <button onClick={handleClick}>Copy!</button>
+        <br></br>
+        Go to <a href="https://jsonviewer.stack.hu/" target="_blank">here</a> to paste the json then click "Format". Happy Testing!
       </main>
         </div>
   );
