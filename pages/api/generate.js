@@ -37,9 +37,9 @@ export default async function (req, res) {
 
   try {
     const completion = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4",
       temperature: 0.5,
-      max_tokens: 3500,
+      max_tokens: 7000,
       messages: [{
         role: "user",
         content: generatePrompt(animal, day),
@@ -67,12 +67,11 @@ function generatePrompt(animal, day) {
   const capitalizedAnimal =
     animal[0].toUpperCase() + animal.slice(1).toLowerCase();
     const cdays = day;
-  return `Please suggest a tour itinerary for ${cdays} days in ${capitalizedAnimal}, by suggesting different attractions to go everyday, things to do, and food to eat with recommended restaurants nearby within a 2km radius of the attraction location, in the following JSON format. Please give me a variety of sentences not shorter than 7 words, except the "attraction" object, which should be the location name:
+  return `Please suggest a tour itinerary for ${cdays} days in ${capitalizedAnimal}, by suggesting different attractions to go everyday, things to do, and halal food (muslim-friendly) to eat with recommended restaurants nearby within a 2km radius of the attraction location, in the following JSON format. Please give me a variety of sentences between 5 to 12 words, except the "attraction" object, which should be the location name:
   [
     {
       "Day": {
         "attraction": "",
-        "breakfast": "",
         "morning activity": "",
         "lunch": "",
         "afternoon activity": "",
@@ -85,12 +84,11 @@ function generatePrompt(animal, day) {
 
 /*
 
-`Please suggest a tour itinerary for ${cdays} days in ${capitalizedAnimal}, by suggesting different attractions to go everyday, things to do, and food to eat with recommended restaurants nearby within a 2km radius of the attraction location, in the following JSON format. Please give me a variety of sentences not shorter than 7 words, except the "attraction" object, which should be the location name:
+`Please suggest a tour itinerary for ${cdays} days in ${capitalizedAnimal}, by suggesting different attractions to go everyday, things to do, and halal food (muslim-friendly) to eat with recommended restaurants nearby within a 2km radius of the attraction location, in the following JSON format. Please give me a variety of sentences between 5 to 12 words, except the "attraction" object, which should be the location name:
   [
     {
       "Day": {
         "attraction": "",
-        "breakfast": "",
         "morning activity": "",
         "lunch": "",
         "afternoon activity": "",
