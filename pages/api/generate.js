@@ -37,16 +37,17 @@ export default async function (req, res) {
 
   try {
     const completion = await openai.createChatCompletion({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
+    //  prompt: generatePrompt(animal, day),
       temperature: 0.5,
-      max_tokens: 7000,
+      max_tokens: 3500,
       messages: [{
         role: "user",
         content: generatePrompt(animal, day),
       }],
     });
    
-    res.status(200).json({ result: completion.data.choices[0].message.content });
+    res.status(200).json({ result: completion.data.choices[0].message.content});
   } catch(error) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {
@@ -67,16 +68,20 @@ function generatePrompt(animal, day) {
   const capitalizedAnimal =
     animal[0].toUpperCase() + animal.slice(1).toLowerCase();
     const cdays = day;
-  return `Please suggest a tour itinerary for ${cdays} days in ${capitalizedAnimal}, by suggesting different attractions to go everyday, things to do, and halal food (muslim-friendly) to eat with recommended restaurants nearby within a 2km radius of the attraction location, in the following JSON format. Please give me a variety of sentences between 5 to 12 words, except the "attraction" object, which should be the location name:
+  return `I need a ${cdays}-days tour itinerary for ${capitalizedAnimal}, please suggest at least 5 activities to do per day with time and duration (how much time spent for each activity). Here're the conditions:
+  1. The time could be random as long as it makes sense and should be UTC+8 12-hour format.
+  2. The duration should be at least 30 minutes and not more than 3 hours for each activity.
+  3. The activities could be anything common in a tour like checking-in hotels, having breakfast, lunch and dinner in various restaurants, exploring or visiting popular attractions places, etc, and must include the location name (hotel/restaurant/attraction/etc).
+  4. Elaborate each activity with an additional comment like what to do/play and what to eat (suggest only halal food, I'm a Muslim).
+  
+  Please provide this tour itinerary in the following JSON format:
   [
     {
       "Day": {
-        "attraction": "",
-        "morning activity": "",
-        "lunch": "",
-        "afternoon activity": "",
-        "dinner": "",
-        "evening activity": ""
+        "time": "",
+        "duration": "",
+        "activity": "",
+        "comment": ""
       }
     }
   ]`;
