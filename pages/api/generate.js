@@ -39,7 +39,7 @@ export default async function (req, res) {
     const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
     //  prompt: generatePrompt(animal, day),
-      temperature: 0.5,
+      temperature: 0.2,
       max_tokens: 3500,
       messages: [{
         role: "user",
@@ -68,20 +68,50 @@ function generatePrompt(animal, day) {
   const capitalizedAnimal =
     animal[0].toUpperCase() + animal.slice(1).toLowerCase();
     const cdays = day;
-  return `I need a ${cdays}-days tour itinerary for ${capitalizedAnimal}, please suggest at least 5 activities to do per day with time and duration (how much time spent for each activity). Here're the conditions:
-  1. The time could be random as long as it makes sense and should be UTC+8 12-hour format.
-  2. The duration should be at least 30 minutes and not more than 3 hours for each activity.
-  3. The activities could be anything common in a tour like checking-in hotels, having breakfast, lunch and dinner in various restaurants, exploring or visiting popular attractions places, etc, and must include the location name (hotel/restaurant/attraction/etc).
-  4. Elaborate each activity with an additional comment like what to do/play and what to eat (suggest only halal food, I'm a Muslim).
+  return `Write me a ${cdays}-days tour itinerary for ${capitalizedAnimal}, suggest 6 activities to do per day with time and duration (how much time spent for each activity). Here're the conditions:
+  1. The duration should be at least 30 minutes and not more than 3 hours for each activity.
+  2. The activities could be anything common in a tour like checking-in hotels, having breakfast, lunch and dinner in various restaurants, exploring or visiting popular attractions places, etc, and must include the location name (hotel/restaurant/attraction/etc).
+  3. Elaborate each activity with an additional comment like what to do/play and what to eat (suggest only halal food, I'm a Muslim).
   
   Please provide this tour itinerary in the following JSON format:
   [
     {
       "Day": {
-        "time": "",
-        "duration": "",
-        "activity": "",
-        "comment": ""
+        "hh:mm a": {
+           "duration": "",
+           "activity": "",
+           "place": "",
+           "comment": ""
+	},
+        "hh:mm a": {
+           "duration": "",
+           "activity": "",
+           "place": "",
+           "comment": ""
+	},
+        "hh:mm a": {
+           "duration": "",
+           "activity": "",
+           "comment": ""
+	},
+        "hh:mm a": {
+           "duration": "",
+           "activity": "",
+           "place": "",
+           "comment": ""
+	},
+        "hh:mm a": {
+           "duration": "",
+           "activity": "",
+           "place": "",
+           "comment": ""
+	},
+        "hh:mm a": {
+           "duration": "",
+           "activity": "",
+           "place": "",
+           "comment": ""
+	}
       }
     }
   ]`;
