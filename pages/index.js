@@ -58,7 +58,7 @@ export default function Home() {
         <p>
           Model: gpt-3.5-turbo
           <br></br>
-          Temperature: 0.2
+          Temperature: 0.15
         </p>
         
       <br></br>
