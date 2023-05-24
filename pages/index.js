@@ -56,9 +56,9 @@ export default function Home() {
         <h1>Travel Planner Testing App</h1>
         <h5>(recommended by AI - powered by ChatGPT 3.5)</h5>
         <p>
-          Model: gpt-3.5-turbo
+          Model: text-davinci-003
           <br></br>
-          Temperature: 0.15
+          Temperature: 0.2
         </p>
         
       <br></br>

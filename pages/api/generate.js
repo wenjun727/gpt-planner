@@ -36,18 +36,18 @@ export default async function (req, res) {
   }
 
   try {
-    const completion = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-    //  prompt: generatePrompt(animal, day),
-      temperature: 0.15,
+    const completion = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt: generatePrompt(animal, day),
+      temperature: 0.2,
       max_tokens: 3500,
-      messages: [{
-        role: "user",
-        content: generatePrompt(animal, day),
-      }],
+   //   messages: [{
+    //    role: "user",
+     //   content: generatePrompt(animal, day),
+    //  }],
     });
    
-    res.status(200).json({ result: completion.data.choices[0].message.content});
+    res.status(200).json({ result: completion.data.choices[0].text});
   } catch(error) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {
