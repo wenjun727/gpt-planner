@@ -39,8 +39,8 @@ export default async function (req, res) {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: generatePrompt(animal, day),
-      temperature: 0.2,
-      max_tokens: 999,
+      temperature: 0,
+      max_tokens: 2700,
    //   messages: [{
     //    role: "user",
      //   content: generatePrompt(animal, day),
@@ -68,50 +68,44 @@ function generatePrompt(animal, day) {
   const capitalizedAnimal =
     animal[0].toUpperCase() + animal.slice(1).toLowerCase();
     const cdays = day;
-  return `Give me a ${cdays}-days tour itinerary for ${capitalizedAnimal}, with 5 activities to do per day with the following conditions:
-  1. Time: 12-hour format: "hh:mm a".
-  2. Duration: Total time spent for each activity, and must be at least 30 minutes and not more than 3 hours for each activity.
-  3. Activity: Must include lunch at 12 pm and dinner at 7pm in different restaurants, exploring popular attractions places, etc.
-  4. Place: Location name for the activity, could be a restaurant name or any attraction name.
-  5. Comment: Elaborate each activity with an additional comment like what to do and what to eat (suggest only halal food).
-  
-  Please provide the tour itinerary data in the following JSON format:
+  return `Give me a ${cdays}-days tour itinerary for ${capitalizedAnimal}, in a JSON format:
   [
     {
       "Day": {
-        "hh:mm a": {
-           "duration": "",
+        "09:00 am": {
            "morning activity": "",
            "place": "",
            "comment": ""
 	},
         "12:00 pm": {
-           "duration": "",
            "lunch": "",
            "place": "",
            "comment": ""
 	},
-        "hh:mm a": {
-           "duration": "",
+        "03:00 pm": {
            "afternoon activity": "",
            "place": "",
            "comment": ""
 	},
         "07:00 pm": {
-           "duration": "",
            "dinner": "",
            "place": "",
            "comment": ""
 	},
-        "hh:mm a": {
-           "duration": "",
+        "09:00 pm": {
            "evening/night activity": "",
            "place": "",
            "comment": ""
 	}
       }
     }
-  ]`;
+  ]
+
+Conditions as below:
+  1. Time: 12-hour format: "hh:mm a".
+  2. Activity: Must include lunch at 12 pm and dinner at 7pm in different restaurants, exploring popular attractions places, etc.
+  3. Place: Location name for the activity, could be a restaurant name or any attraction name.
+  4. Comment: Elaborate each activity with an additional comment like what to do and what to eat (suggest only halal food).`;
 }
 
 /*

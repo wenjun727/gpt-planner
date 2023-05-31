@@ -58,7 +58,7 @@ export default function Home() {
         <p>
           Model: text-davinci-003
           <br></br>
-          Temperature: 0.2
+          Temperature: 0
         </p>
         
       <br></br>
